@@ -3,14 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Stepik Travel</title>
+  <title>{{title}}</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
   <header class="container mt-3">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Stepik Travel</a>
+      <a class="navbar-brand" href="#">{{title}}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,6 +31,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Из Казани</a>
           </li>
+
         </ul>
       </div>
     </nav>
@@ -38,9 +39,9 @@
   <main class="container mt-3">
     <!-- HERO -->
     <section class="jumbotron text-center mt-4">
-      <h1 class="display-4">Всякие туры</h1>
-      <p class="lead">Для тех, кого отвлекают дома</p>
-      <p class="mt-5 w-50 mx-auto">Лучшие направления,где никто не будет вам мешать сидеть на берегу и изучать программирование, дизайн, разработку игр и управление продуктами</p>
+      <h1 class="display-4">Все туры</h1>
+      <p class="lead">{{subtitle}}</p>
+      <p class="mt-5 w-50 mx-auto">{{description}}</p>
     </section>
     <!-- CARDS -->
     <div class="row mt-5">
