@@ -61,6 +61,5 @@ def render_tour(tour_id='1'):
 def page_not_found(error):
     return 'Такой страницы нет'
 
-
 if __name__ == '__main__':
     app.run()
