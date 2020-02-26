@@ -21,41 +21,33 @@ def main():
 @app.route('/departure/<departure>')
 def render_departure(departure):
     departure = departure
+    max_price, min_price, max_nights, min_nights = None, None, None, None
+    count_tours = 0
+    tour_id = 0
+    tours_on_page = {}
     if departure not in departures:
         return page_not_found(404)
-    departure_page_title = 'Летим {}'.format(departures[departure])
-    found_tours = []
-    tours_price_values = []
-    tours_number_of_nights = []
-    for tour in tours:
-        if departure == tours[tour]['departure']: found_tours.append(tour)
-    tours_on_page = create_tours_on_page(found_tours)
-    for tour in tours_on_page:
-        tours_price_values.append(tours_on_page[tour]['price'])
-        tours_number_of_nights.append(tours_on_page[tour]['nights'])
-    return render_template('departure.html', title=title, departures=departures,
-                       departure_page_title=departure_page_title, tours=tours_on_page,
-                       tours_price=tours_price_values, tours_nights=tours_number_of_nights)
+    departure_page_title = f'Летим {departures[departure]}'
+    for tour in tours.values():
+        tour_id += 1
+        if departure == tour['departure']:
+            count_tours += 1
+            max_price = max(tour['price'], max_price) if max_price else tour['price']
+            min_price = min(tour['price'], min_price) if min_price else tour['price']
+            max_nights = max(tour['nights'], max_nights) if max_nights else tour['nights']
+            min_nights = min(tour['nights'], min_nights) if min_nights else tour['nights']
+            stats = {'count_tours': count_tours, 'max_price': max_price, 'min_price': min_price,
+                     'max_nights': max_nights, 'min_nights': min_nights, }
+            tours_on_page[tour_id] = tour
+    return render_template('departure.html', departures=departures, departure_page_title=departure_page_title,
+                           stats = stats, title=title,tours=tours_on_page)
 
 @app.route('/tour/<tour_id>')
 def render_tour(tour_id='1'):
     tour_id = int(tour_id)
     if tour_id not in tours:
         return page_not_found(404)
-    tour_title = tours[tour_id]['title']
-    tour_picture = tours[tour_id]['picture']
-    tour_description = tours[tour_id]['description']
-    tour_price_msg = 'Купить тур за {}'.format(tours[tour_id]['price'])
-    tour_text = None
-    for departure in departures:
-        if departure == tours[tour_id]['departure']:
-            tour_text = '{country_to} {country_from} {night_number} ночей'.format(
-                country_to=tours[tour_id]['country'],
-                country_from=departures[tours[tour_id]['departure']],
-                night_number=tours[tour_id]['nights'])
-    return render_template('tour.html', tour_title=tour_title, tour_text=tour_text, tour_picture=tour_picture,
-                           tour_description=tour_description, tour_price_msg=tour_price_msg, title=title,
-                           departures=departures)
+    return render_template('tour.html', tour=tours[tour_id], title=title, departures=departures)
 
 @app.errorhandler(404)
 def page_not_found(error):

@@ -3,8 +3,8 @@
 
 <main class="container mt-3">
     <h1 class="display-5 mt-4">{{departure_page_title}}</h1>
-    <p class="mb-4">Найдено {{tours|length}} тура, от {{tours_price|min}} до {{tours_price|max}} и от
-        {{tours_nights|min}} ночей до {{tours_nights|max}} ночей</p>
+    <p class="mb-4">Найдено {{stats.count_tours}} тура, от {{stats.min_price}} до {{stats.max_price}} и от
+        {{stats.min_nights}} ночей до {{stats.max_nights}} ночей</p>
     <!-- CARDS -->
     <div class="row mt-5">
         {% for tour in tours %}
@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <h2 class="h5 card-title">{{tours[tour].title}}</h2>
-                    <p class="card-text">{{tours[tour].description}}</p>
+                    <p class="card-text">{{tours[tour].description|truncate(200)}}</p>
                     <a href="/tour/{{tour}}" class="btn btn-sm btn-primary">Подробнее</a>
                 </div>
             </div>
